@@ -3,6 +3,11 @@
 
 ## Usage
 
+### Install
+``` bash
+yarn add -D @svgr/core @svgr/plugin-jsx @svgr/plugin-prettier @svgr/plugin-svgo commander ts-node
+```
+
 ### Keep Colors
 ``` bash
 npx ts-node generate-icons.ts
