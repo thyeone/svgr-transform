@@ -257,3 +257,4 @@ export { Property1Kosovo } from './Property1Kosovo';
 export { IconCustomerService2Line1 } from './IconCustomerService2Line1';
 export { IconEmotionHappyFill } from './IconEmotionHappyFill';
 export { IconPassValidLine } from './IconPassValidLine';
+export { IconCornerDownRightLine1 } from './IconCornerDownRightLine1';

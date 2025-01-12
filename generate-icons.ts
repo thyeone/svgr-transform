@@ -76,9 +76,31 @@ async function generateSvgComponents() {
       componentNames.push(componentName);
     }
 
-    const indexContent = componentNames.map((name) => `export { ${name} } from './${name}';`).join('\n');
+    const indexPath = path.join(COMPONENT_DIR, 'index.ts');
+    let existingContent = '';
 
-    await fs.writeFile(path.join(COMPONENT_DIR, 'index.ts'), indexContent);
+    try {
+      existingContent = await fs.readFile(indexPath, 'utf-8');
+    } catch {
+      existingContent = ''; // 파일이 없는 경우 빈 문자열로 시작
+    }
+
+    if (!componentNames.length) {
+      console.log('⚠️ 생성할 아이콘이 없습니다. 종료합니다.');
+      return;
+    }
+
+    // 새로운 컴포넌트에 대한 export 문 생성
+    const newExportLine = `export { ${componentNames} } from './${componentNames}';`;
+
+    // 이미 해당 export 문이 존재하는지 확인
+    if (!existingContent.includes(newExportLine)) {
+      // 새로운 export 문을 마지막 줄에 추가
+      const updatedContent = existingContent ? `${existingContent.trim()}\n${newExportLine}\n` : `${newExportLine}\n`;
+
+      await fs.writeFile(indexPath, updatedContent);
+      console.log(`✅ ${componentNames} 추가됨`);
+    }
 
     console.log('✅ SVG 컴포넌트 생성 완료!');
   } catch (error) {
